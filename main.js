@@ -6,14 +6,14 @@ const { tmpdir, homedir } = require("os");
 
 const VENV_PYTHON = join(homedir(), ".genotools", "audiobook", ".venv", "bin", "python3");
 const SAMPLE_RATE = 24000;
-const SPEED_FILE = join(tmpdir(), "kokoro-tts-speed.txt");
+const SPEED_FILE = join(tmpdir(), "genovox-speed.txt");
 
 const DEFAULT_SETTINGS = {
   voice: "",
   speed: 0,
 };
 
-class KokoroTTSPlugin extends Plugin {
+class GenoVoxPlugin extends Plugin {
   async onload() {
     await this.loadSettings();
     this.ttsProcess = null;
@@ -37,7 +37,7 @@ class KokoroTTSPlugin extends Plugin {
     this.hudEl = null;
     this.hudTimer = null;
 
-    this.ribbonIcon = this.addRibbonIcon("audio-lines", "Kokoro TTS", () => {
+    this.ribbonIcon = this.addRibbonIcon("audio-lines", "GenoVox", () => {
       if (this.isPlaying || this.isGenerating) {
         this.stop();
       } else {
@@ -54,10 +54,10 @@ class KokoroTTSPlugin extends Plugin {
     this.addCommand({ id: "skip-forward", name: "Skip forward one chunk", callback: () => this.skipForward() });
     this.addCommand({ id: "skip-back", name: "Skip back one chunk", callback: () => this.skipBack() });
 
-    this.addSettingTab(new KokoroSettingTab(this.app, this));
+    this.addSettingTab(new GenoVoxSettingTab(this.app, this));
 
     this.statusBarEl = this.addStatusBarItem();
-    this.statusBarEl.addClass("kokoro-tts-status");
+    this.statusBarEl.addClass("genovox-status");
     this.statusBarEl.addEventListener("click", () => { if (this.isPlaying) this.togglePause(); });
     this.updateStatus("idle");
 
@@ -72,18 +72,18 @@ class KokoroTTSPlugin extends Plugin {
 
   createHUD() {
     this.hudEl = document.createElement("div");
-    this.hudEl.className = "kokoro-tts-hud";
+    this.hudEl.className = "genovox-hud";
     this.hudEl.innerHTML = `
-      <div class="kokoro-tts-hud-speed"></div>
-      <div class="kokoro-tts-hud-text"></div>
+      <div class="genovox-hud-speed"></div>
+      <div class="genovox-hud-text"></div>
     `;
     document.body.appendChild(this.hudEl);
   }
 
   showHUD(content, autoHide = 3000) {
     if (!this.hudEl) return;
-    const speedEl = this.hudEl.querySelector(".kokoro-tts-hud-speed");
-    const textEl = this.hudEl.querySelector(".kokoro-tts-hud-text");
+    const speedEl = this.hudEl.querySelector(".genovox-hud-speed");
+    const textEl = this.hudEl.querySelector(".genovox-hud-text");
 
     if (content.speed !== undefined) {
       speedEl.textContent = `${content.speed.toFixed(2)}x`;
@@ -220,7 +220,7 @@ class KokoroTTSPlugin extends Plugin {
     this.gainNode = this.audioCtx.createGain();
     this.gainNode.connect(this.audioCtx.destination);
 
-    const inputPath = join(tmpdir(), `kokoro-tts-input-${Date.now()}.txt`);
+    const inputPath = join(tmpdir(), `genovox-input-${Date.now()}.txt`);
     const vaultBase = this.app.vault.adapter.basePath;
     const workerPath = join(vaultBase, this.manifest.dir, "tts_worker.py");
 
@@ -399,7 +399,7 @@ class KokoroTTSPlugin extends Plugin {
     this.isGenerating = true;
 
     // Write remaining text and launch a new worker
-    const inputPath = join(tmpdir(), `kokoro-tts-regen-${Date.now()}.txt`);
+    const inputPath = join(tmpdir(), `genovox-regen-${Date.now()}.txt`);
     const vaultBase = this.app.vault.adapter.basePath;
     const workerPath = join(vaultBase, this.manifest.dir, "tts_worker.py");
 
@@ -642,13 +642,13 @@ class KokoroTTSPlugin extends Plugin {
   }
 }
 
-class KokoroSettingTab extends PluginSettingTab {
+class GenoVoxSettingTab extends PluginSettingTab {
   constructor(app, plugin) { super(app, plugin); this.plugin = plugin; }
 
   display() {
     const { containerEl } = this;
     containerEl.empty();
-    containerEl.createEl("h2", { text: "Kokoro TTS Settings" });
+    containerEl.createEl("h2", { text: "GenoVox TTS Settings" });
     containerEl.createEl("p", {
       text: "Leave voice and speed blank to use your ~/.genotools/tts/config.yaml settings.",
       cls: "setting-item-description",
@@ -675,4 +675,4 @@ class KokoroSettingTab extends PluginSettingTab {
   }
 }
 
-module.exports = KokoroTTSPlugin;
+module.exports = GenoVoxPlugin;

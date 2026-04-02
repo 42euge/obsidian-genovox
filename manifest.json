@@ -1,9 +1,9 @@
 {
-  "id": "kokoro-tts",
-  "name": "Kokoro TTS",
+  "id": "genovox",
+  "name": "GenoVox",
   "version": "1.0.0",
   "minAppVersion": "0.15.0",
-  "description": "Read your notes aloud using Kokoro TTS — a high-quality local text-to-speech model.",
+  "description": "Read your notes aloud with high-quality local TTS. Streaming playback, word-level scrubbing, adaptive speed control.",
   "author": "euge",
   "isDesktopOnly": true
 }

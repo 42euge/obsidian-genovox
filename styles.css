@@ -1,11 +1,11 @@
-.kokoro-tts-status {
+.genovox-status {
   display: flex;
   align-items: center;
   gap: 4px;
   cursor: pointer;
 }
 
-.kokoro-tts-status .spinner {
+.genovox-status .spinner {
   display: inline-block;
   width: 12px;
   height: 12px;
@@ -20,7 +20,7 @@
 }
 
 /* Persistent HUD overlay */
-.kokoro-tts-hud {
+.genovox-hud {
   position: fixed;
   top: 40px;
   left: 20px;
@@ -39,13 +39,13 @@
   pointer-events: none;
 }
 
-.kokoro-tts-hud.visible {
+.genovox-hud.visible {
   opacity: 1;
   transform: translateY(0);
   pointer-events: auto;
 }
 
-.kokoro-tts-hud-speed {
+.genovox-hud-speed {
   font-size: 11px;
   color: var(--text-accent);
   font-weight: 600;
@@ -53,18 +53,18 @@
   letter-spacing: 0.5px;
 }
 
-.kokoro-tts-hud-text {
+.genovox-hud-text {
   font-size: 14px;
   line-height: 1.6;
   color: var(--text-normal);
   text-align: center;
 }
 
-.kokoro-tts-hud-text .before {
+.genovox-hud-text .before {
   color: var(--text-faint);
 }
 
-.kokoro-tts-hud-text .current {
+.genovox-hud-text .current {
   color: var(--text-normal);
   font-weight: 600;
   background: var(--text-highlight-bg);
@@ -72,6 +72,6 @@
   border-radius: 3px;
 }
 
-.kokoro-tts-hud-text .after {
+.genovox-hud-text .after {
   color: var(--text-faint);
 }
