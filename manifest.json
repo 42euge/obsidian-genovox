@@ -1,0 +1,9 @@
+{
+  "id": "kokoro-tts",
+  "name": "Kokoro TTS",
+  "version": "1.0.0",
+  "minAppVersion": "0.15.0",
+  "description": "Read your notes aloud using Kokoro TTS — a high-quality local text-to-speech model.",
+  "author": "euge",
+  "isDesktopOnly": true
+}
